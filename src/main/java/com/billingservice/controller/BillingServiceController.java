@@ -41,6 +41,34 @@ public class BillingServiceController {
 		return "index";
 	}
 	
+	@PostMapping("/createPaymentProcessor")
+	public ResponseEntity<Object> modifyFee(@RequestParam("name") String paymentProcessorName, 
+			@RequestParam("flatFee") BigDecimal flatFee, @RequestParam("acquirerPlusLV") BigDecimal acquirerPlusLV,
+			@RequestParam("acquirerPlusHV") BigDecimal acquirerPlusHV, @RequestParam("feeIndicator") int feeIndicator) {	
+		try {
+			log.info("Request to create a PP received with data {} ff {} applv {} apphv {} limit {}",
+					paymentProcessorName, flatFee, acquirerPlusLV, acquirerPlusHV, feeIndicator );
+			DatabaseActionResponse createPpResponse = billingService.createPaymentProcessor(paymentProcessorName, flatFee, acquirerPlusLV, acquirerPlusHV, feeIndicator);
+			return ResponseEntity.ok(createPpResponse);
+		} catch(Exception ex) {
+			log.error("Exception get", ex);
+			return ResponseEntity.internalServerError().build();
+		}
+	}
+
+	@PostMapping("/createEcommerce")
+	public ResponseEntity<Object> modifyFee(@RequestParam("name") String ecommerceName, 
+			@RequestParam("paymentProcessorId") int paymentProcessorId) {	
+		try {
+			log.info("Request to create a EC received name {} paymet processor id {}", ecommerceName, paymentProcessorId);
+			DatabaseActionResponse createEcResponse = billingService.createEcommerce(ecommerceName, paymentProcessorId);
+			return ResponseEntity.ok(createEcResponse);
+		} catch(Exception ex) {
+			log.error("Exception get", ex);
+			return ResponseEntity.internalServerError().build();
+		}
+	}
+	
 	@PostMapping("/billingInfo")
 	public ResponseEntity<Object> ecommerceBillingInfo(@RequestParam("paymentProcessorId") int paymentProcessorId,
 			@RequestParam("month") int month, @RequestParam("year") int year) {

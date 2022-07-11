@@ -33,6 +33,10 @@ public class BillingService {
 	private static final String NO_TRANSACTION_FOUND = "No transactions found for the ecommerce %s and period requested | ";
 	private static final String MODIFIED = "Changes applied successfully";
 	private static final String BAD_FEE_VALUE = "The value of the fees must be between 0 and 1 (Ex. 1% = 0.01)";
+	private static final String PP_ALREADY_EXISTS = "There is already a payment processor with this name";
+	private static final String EC_ALREADY_EXISTS = "There is already a ecommerce with this name assigned to the payment processor";
+	private static final String PP_CREATED = "Payment Processor successfuly created. Id -> %x.";
+	private static final String EC_CREATED = "Ecommerce successfuly created. Id -> %x.";
 	
 	@Autowired
 	private BillingMapper billingMapper;
@@ -106,4 +110,32 @@ public class BillingService {
 			return DatabaseActionResponse.builder().result(BAD_FEE_VALUE).build();
 		}
 	}
+
+	public DatabaseActionResponse createPaymentProcessor(String paymentProcessorName, BigDecimal flatFee,
+			BigDecimal acquirerPlusLV, BigDecimal acquirerPlusHV, int feeIndicator) {
+		try {
+			if (Boolean.TRUE.equals(billingMapper.existsPaymentProcessor(paymentProcessorName))) {
+				return DatabaseActionResponse.builder().result(PP_ALREADY_EXISTS).build();
+			} else {
+				int newPpId = billingMapper.createPaymentProcessor(paymentProcessorName, flatFee, acquirerPlusLV, acquirerPlusHV, feeIndicator);
+				return DatabaseActionResponse.builder().result(String.format(PP_CREATED, newPpId)).build();
+			}
+		} catch (DataIntegrityViolationException ex) {
+			return DatabaseActionResponse.builder().result(BAD_FEE_VALUE).build();
+		}
+	}
+	
+	public DatabaseActionResponse createEcommerce(String ecommerceName, int paymentprocessorId) {
+		try {
+			if (Boolean.TRUE.equals(billingMapper.existsEcommerce(ecommerceName, paymentprocessorId))) {
+				return DatabaseActionResponse.builder().result(EC_ALREADY_EXISTS).build();
+			} else {
+				int newPpId = billingMapper.createEcommerce(ecommerceName, paymentprocessorId);
+				return DatabaseActionResponse.builder().result(String.format(EC_CREATED, newPpId)).build();
+			}
+		} catch (DataIntegrityViolationException ex) {
+			return DatabaseActionResponse.builder().result(BAD_FEE_VALUE).build();
+		}
+	}
+
 }

@@ -9,5 +9,7 @@ import com.billingservice.model.Ecommerce;
 public interface EcommerceRepo extends JpaRepository<Ecommerce, Integer>{
 	
 	List<Ecommerce> findByPaymentProcessorId(int paymentProcessorId);
+	
+	Boolean existsByNameAndPaymentProcessorId(String ecommerceName, int paymentprocessorId);
 
 }

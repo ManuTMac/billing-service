@@ -16,4 +16,8 @@ public interface PaymentProcessorRepo extends JpaRepository<PaymentProcessor, In
 	
 	Optional<PaymentProcessor> findById(int paymentProcessorId);
 
+	long countByName(String paymentProcessorName);
+	
+	Boolean existsByName(String paymentProcessorName);
+
 }

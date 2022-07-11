@@ -64,4 +64,30 @@ public class BillingMapper {
 		paymentProcessorRepo.save(paymentProcessor);	
 	}
 
+	public Boolean existsPaymentProcessor(String paymentProcessorName) {
+		return paymentProcessorRepo.existsByName(paymentProcessorName);
+	}
+
+	public int createPaymentProcessor(String paymentProcessorName, BigDecimal flatFee, BigDecimal acquirerPlusLV,
+			BigDecimal acquirerPlusHV, int feeIndicator) {
+		PaymentProcessor paymentProcessor = new PaymentProcessor();
+		paymentProcessor.setName(paymentProcessorName);
+		paymentProcessor.setFlatFee(flatFee);
+		paymentProcessor.setAcquirerPlusLV(acquirerPlusLV);
+		paymentProcessor.setAcquirerPlusHV(acquirerPlusHV);
+		paymentProcessor.setFeeIndicator(feeIndicator);
+		return paymentProcessorRepo.save(paymentProcessor).getId();
+	}
+
+	public Boolean existsEcommerce(String ecommerceName, int paymentprocessorId) {
+		return ecommerceRepo.existsByNameAndPaymentProcessorId(ecommerceName, paymentprocessorId);
+	}
+
+	public int createEcommerce(String ecommerceName, int paymentProcessorId) {
+		Ecommerce ecommerce = new Ecommerce();
+		ecommerce.setName(ecommerceName);
+		ecommerce.setPaymentProcessorId(paymentProcessorId);
+		return ecommerceRepo.save(ecommerce).getId();
+	}
+
 }
