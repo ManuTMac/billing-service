@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html lang="EN" xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Billing Service</title> 
+	<meta http-equiv="Expires" content="0">
+  	<meta http-equiv="Last-Modified" content="0">
+  	<meta http-equiv="Cache-Control" content="no-cache, mustrevalidate">
+  	<meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  	<link rel="stylesheet" href="css.css">
+  	<script src="js.js"></script>
+</head>
+<body>
+<h1 align="center">Billing Service</h1>
+<div class="wrapper">
+  <div class="tabs">
+    <div class="tab">
+        <input type="radio" name="css-tabs" id="tab-1" checked class="tab-switch">
+        <label for="tab-1" class="tab-label">Billing</label>
+        <div class="tab-content">
+            <form id = "billingForm" onsubmit="getBillResponse();">
+                <label for="paymentProcessorId">Payment Processor: </label>
+                <select name="paymentProcessorId">
+                    <option th:each="paymentProcessor : ${paymentProcessors}" th:value="${paymentProcessor.id}" th:text="${paymentProcessor.name}"></option>
+                </select><br><br>
+                <label for="month">Month: </label>
+				<select name="month">
+					<option value="1">January</option> 
+					<option value="2">February</option> 
+					<option value="3">March</option> 
+					<option value="4">April</option> 
+					<option value="5">May</option> 
+					<option value="6">June</option> 
+					<option value="7">July</option> 
+					<option value="8">August</option> 
+					<option value="9">September</option> 
+					<option value="10">October</option> 
+					<option value="11">November</option> 
+					<option value="12">December</option> 
+				</select><br><br>
+				<label for="year">Year: </label>
+				<select name="year">
+					<option value="2022">2022</option> 
+					<option value="2021">2021</option> 
+				</select><br><br>
+                <button type="submit">Go!</button>
+            </form>
+            <div id = "billResponse" class="response"></div>      
+        </div>
+    </div>
+    <div class="tab">
+        <input type="radio" name="css-tabs" id="tab-2" class="tab-switch">
+        <label for="tab-2" class="tab-label">Modify fee</label>
+        <div class="tab-content">
+            <form id="feeForm" onsubmit="getFeeResponse();">
+                <label for="ecommerceId">eCommerce: </label>
+                <select name="ecommerceId"> 
+                    <option th:each="ecommerce : ${ecommerces}" th:value="${ecommerce.id}" th:text="${ecommerce.name}"></option>
+                </select><br><br>
+                <label for="FF">Flat Fee: </label>
+                    <input type="text" name="flatFee" required><br><br>
+                <label for="acquirerPlusLV">Acquirer Plus Pricing Low Volume: </label>
+                    <input type="text" name="acquirerPlusLV" required><br><br>
+                <label for="acquirerPlusHV">Acquirer Plus Pricing High Volume: </label>
+                    <input type="text" name="acquirerPlusHV" required><br><br>
+                <label for="feeIndicator">Acquirer Plus Pricing High Volume: </label>
+                    <input type="text" name="feeIndicator" required><br><br>
+                <button type="submit">Go!</button><br>
+            </form>        
+            <div id = "feeResponse" class="response"></div>   
+        </div>
+    </div>
+  </div>
+  <p></p>
+</div>
+</body>
+</html>
