@@ -70,12 +70,12 @@ public class BillingMapper {
 
 	public int createPaymentProcessor(String paymentProcessorName, BigDecimal flatFee, BigDecimal acquirerPlusLV,
 			BigDecimal acquirerPlusHV, int feeIndicator) {
-		PaymentProcessor paymentProcessor = new PaymentProcessor();
-		paymentProcessor.setName(paymentProcessorName);
-		paymentProcessor.setFlatFee(flatFee);
-		paymentProcessor.setAcquirerPlusLV(acquirerPlusLV);
-		paymentProcessor.setAcquirerPlusHV(acquirerPlusHV);
-		paymentProcessor.setFeeIndicator(feeIndicator);
+		PaymentProcessor paymentProcessor = PaymentProcessor.builder()
+				.name(paymentProcessorName)
+				.flatFee(flatFee)
+				.acquirerPlusLV(acquirerPlusLV)
+				.acquirerPlusHV(acquirerPlusHV)
+				.feeIndicator(feeIndicator).build();
 		return paymentProcessorRepo.save(paymentProcessor).getId();
 	}
 
@@ -84,9 +84,9 @@ public class BillingMapper {
 	}
 
 	public int createEcommerce(String ecommerceName, int paymentProcessorId) {
-		Ecommerce ecommerce = new Ecommerce();
-		ecommerce.setName(ecommerceName);
-		ecommerce.setPaymentProcessorId(paymentProcessorId);
+		Ecommerce ecommerce = Ecommerce.builder()
+				.name(ecommerceName)
+				.paymentProcessorId(paymentProcessorId).build();
 		return ecommerceRepo.save(ecommerce).getId();
 	}
 

@@ -6,12 +6,8 @@ function getBillResponse(){
   xhttp.onload = function() {
 	json = JSON.parse(this.responseText);
 	printed = "";
-	for (i in json){
-		printed += "<p>" + i + ": " + json[i];
-		if (!isNaN(json[i])){
-			printed += " €";
-		}
-		printed += "<p>";
+	for (i in json.){
+		printed += "<p>" + i + ": " + json[i];"</p>";
 	}
     
 	document.getElementById("billResponse").innerHTML = printed;

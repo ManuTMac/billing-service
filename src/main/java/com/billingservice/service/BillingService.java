@@ -19,11 +19,11 @@ import com.billingservice.model.Ecommerce;
 import com.billingservice.model.PaymentProcessor;
 import com.billingservice.model.Transaction;
 
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@RequiredArgsConstructor
+@AllArgsConstructor
 @Service
 public class BillingService {
 	
@@ -70,8 +70,7 @@ public class BillingService {
 			addBillResult(NO_TRANSACTION_FOUND, ecommerce.getName());
 			return BigDecimal.ZERO;
 		}
-		return billingMapper.getMonthlyTransactions(ecommerce.getId(), month, year)
-				.stream()
+		return monthlyTransactions.stream()
 			.map(Transaction::rowAmount)
 			.reduce(BigDecimal.ZERO, BigDecimal::add);	
 	}
@@ -126,16 +125,12 @@ public class BillingService {
 	}
 	
 	public DatabaseActionResponse createEcommerce(String ecommerceName, int paymentprocessorId) {
-		try {
-			if (Boolean.TRUE.equals(billingMapper.existsEcommerce(ecommerceName, paymentprocessorId))) {
-				return DatabaseActionResponse.builder().result(EC_ALREADY_EXISTS).build();
-			} else {
-				int newPpId = billingMapper.createEcommerce(ecommerceName, paymentprocessorId);
-				return DatabaseActionResponse.builder().result(String.format(EC_CREATED, newPpId)).build();
-			}
-		} catch (DataIntegrityViolationException ex) {
-			return DatabaseActionResponse.builder().result(BAD_FEE_VALUE).build();
+		if (Boolean.TRUE.equals(billingMapper.existsEcommerce(ecommerceName, paymentprocessorId))) {
+			return DatabaseActionResponse.builder().result(EC_ALREADY_EXISTS).build();
+		} else {
+			int newPpId = billingMapper.createEcommerce(ecommerceName, paymentprocessorId);
+			return DatabaseActionResponse.builder().result(String.format(EC_CREATED, newPpId)).build();
 		}
-	}
 
+	}
 }

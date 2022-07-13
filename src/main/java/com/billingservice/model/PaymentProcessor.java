@@ -9,11 +9,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Entity
 @Table(name="payment_processor")
 @Data
+@Builder
 public class PaymentProcessor {
 	
 	@Id
