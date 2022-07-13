@@ -20,10 +20,12 @@ import com.billingservice.model.PaymentProcessor;
 import com.billingservice.model.Transaction;
 
 import lombok.AllArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Service
 public class BillingService {
 	
@@ -39,6 +41,7 @@ public class BillingService {
 	private static final String EC_CREATED = "Ecommerce successfuly created. Id -> %x.";
 	
 	@Autowired
+	@NonNull
 	private BillingMapper billingMapper;
 	
 	private String result;

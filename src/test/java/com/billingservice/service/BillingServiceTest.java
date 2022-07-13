@@ -39,7 +39,7 @@ public class BillingServiceTest {
 	@BeforeEach
 	void setUp() {
 		billingMapper = mock(BillingMapper.class);
-		billingService = new BillingService(billingMapper, "");
+		billingService = new BillingService(billingMapper);
 		testPaymentProcessor = PaymentProcessor.builder().id(1).name("PP1").flatFee(new BigDecimal("0.05"))
 				.acquirerPlusLV(new BigDecimal("0.05")).acquirerPlusHV(new BigDecimal("0.02")).feeIndicator(50).build();
 		testEcommerce = Ecommerce.builder().id(1).name("EC1").paymentProcessorId(1).build();
