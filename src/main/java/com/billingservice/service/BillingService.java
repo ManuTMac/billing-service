@@ -19,7 +19,6 @@ import com.billingservice.model.Ecommerce;
 import com.billingservice.model.PaymentProcessor;
 import com.billingservice.model.Transaction;
 
-import lombok.AllArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

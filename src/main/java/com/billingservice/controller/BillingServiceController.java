@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.billingservice.dto.BillingResponse;
 import com.billingservice.dto.DatabaseActionResponse;
 import com.billingservice.mapper.BillingMapper;
-import com.billingservice.model.Ecommerce;
 import com.billingservice.model.PaymentProcessor;
 import com.billingservice.service.BillingService;
 
@@ -35,9 +34,7 @@ public class BillingServiceController {
 	@GetMapping("/")
 	public String index(Model model) {
 		List<PaymentProcessor> paymentProcessors = billingMapper.getAllPaymentProcessors();
-		List<Ecommerce> ecommerces = billingMapper.getAllEcommerces();
 		model.addAttribute("paymentProcessors", paymentProcessors);
-		model.addAttribute("ecommerces", ecommerces);
 		return "index";
 	}
 	

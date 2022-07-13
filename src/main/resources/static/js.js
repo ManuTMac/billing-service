@@ -6,8 +6,8 @@ function getBillResponse(){
   xhttp.onload = function() {
 	json = JSON.parse(this.responseText);
 	printed = "";
-	for (i in json.){
-		printed += "<p>" + i + ": " + json[i];"</p>";
+	for (i in json.billList){
+		printed += "<p>" + json.billList[i].ecommerce + ": " + json.billList[i].amount + "€</p>";
 	}
     
 	document.getElementById("billResponse").innerHTML = printed;
@@ -23,9 +23,37 @@ function getFeeResponse(){
   const xhttp = new XMLHttpRequest();
   xhttp.onload = function() {
 	json = JSON.parse(this.responseText);
-	printed = "<p>" + json["ResultDescription"] + "<p>";    
+	printed = "<p>" + json["result"] + "<p>";    
 	document.getElementById("feeResponse").innerHTML = printed;
   }
   xhttp.open("POST", "/modifyFee");
+  xhttp.send(data);
+     }
+
+function getcreatePPResponse(){
+	
+	event.preventDefault();
+    const data = new FormData(document.getElementById('createPPForm'));
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function() {
+	json = JSON.parse(this.responseText);
+	printed = "<p>" + json["result"] + "<p>";    
+	document.getElementById("createPPResponse").innerHTML = printed;
+  }
+  xhttp.open("POST", "/createPaymentProcessor");
+  xhttp.send(data);
+     }
+
+function getCreateECResponse(){
+	
+	event.preventDefault();
+    const data = new FormData(document.getElementById('createECForm'));
+  const xhttp = new XMLHttpRequest();
+  xhttp.onload = function() {
+	json = JSON.parse(this.responseText);
+	printed = "<p>" + json["result"] + "<p>";    
+	document.getElementById("createECResponse").innerHTML = printed;
+  }
+  xhttp.open("POST", "/createEcommerce");
   xhttp.send(data);
      }

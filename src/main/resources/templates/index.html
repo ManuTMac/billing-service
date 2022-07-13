@@ -53,9 +53,9 @@
         <label for="tab-2" class="tab-label">Modify fee</label>
         <div class="tab-content">
             <form id="feeForm" onsubmit="getFeeResponse();">
-                <label for="ecommerceId">eCommerce: </label>
-                <select name="ecommerceId"> 
-                    <option th:each="ecommerce : ${ecommerces}" th:value="${ecommerce.id}" th:text="${ecommerce.name}"></option>
+                <label for="paymentProcessorId">Payment Processor: </label>
+                <select name="paymentProcessorId">
+                    <option th:each="paymentProcessor : ${paymentProcessors}" th:value="${paymentProcessor.id}" th:text="${paymentProcessor.name}"></option>
                 </select><br><br>
                 <label for="FF">Flat Fee: </label>
                     <input type="text" name="flatFee" required><br><br>
@@ -63,11 +63,47 @@
                     <input type="text" name="acquirerPlusLV" required><br><br>
                 <label for="acquirerPlusHV">Acquirer Plus Pricing High Volume: </label>
                     <input type="text" name="acquirerPlusHV" required><br><br>
-                <label for="feeIndicator">Acquirer Plus Pricing High Volume: </label>
+                <label for="feeIndicator">Fee Indicator: </label>
                     <input type="text" name="feeIndicator" required><br><br>
                 <button type="submit">Go!</button><br>
             </form>        
             <div id = "feeResponse" class="response"></div>   
+        </div>
+    </div>
+    <div class="tab">
+        <input type="radio" name="css-tabs" id="tab-3" class="tab-switch">
+        <label for="tab-3" class="tab-label">Create Payment Processor</label>
+        <div class="tab-content">
+            <form id="createPPForm" onsubmit="getcreatePPResponse();">
+                <label for="name">Name: </label>
+                    <input type="text" name="name" required><br><br>
+                <label for="FF">Flat Fee: </label>
+                    <input type="text" name="flatFee" required><br><br>
+                <label for="acquirerPlusLV">Acquirer Plus Pricing Low Volume: </label>
+                    <input type="text" name="acquirerPlusLV" required><br><br>
+                <label for="acquirerPlusHV">Acquirer Plus Pricing High Volume: </label>
+                    <input type="text" name="acquirerPlusHV" required><br><br>
+                <label for="feeIndicator">Fee Indicator: </label>
+                    <input type="text" name="feeIndicator" required><br><br>
+                <button type="submit">Go!</button><br>
+            </form>        
+            <div id = "createPPResponse" class="response"></div>   
+        </div>
+    </div>
+    <div class="tab">
+        <input type="radio" name="css-tabs" id="tab-4" class="tab-switch">
+        <label for="tab-4" class="tab-label">Create eCommerce</label>
+        <div class="tab-content">
+            <form id="createECForm" onsubmit="getCreateECResponse();">
+                <label for="paymentProcessorId">Payment Processor: </label>
+                <select name="paymentProcessorId">
+                    <option th:each="paymentProcessor : ${paymentProcessors}" th:value="${paymentProcessor.id}" th:text="${paymentProcessor.name}"></option>
+                </select><br><br>
+                <label for="name">Name: </label>
+                    <input type="text" name="name" required><br><br>
+                <button type="submit">Go!</button><br>
+            </form>        
+            <div id = "createECResponse" class="response"></div>   
         </div>
     </div>
   </div>
